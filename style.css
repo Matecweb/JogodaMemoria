@@ -1,0 +1,354 @@
+/* PLACAR */
+#placar {
+  position: fixed;
+  top: 20px; /* Distância do topo para evitar sobrepor o conteúdo superior */
+  left: 0; /* Coloca o placar no lado esquerdo da tela */
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1; /* Não precisa ser tão alto se não vai sobrepor outros elementos */
+  width: 200px; /* Ajuste o tamanho do placar */
+  margin: 0; /* Garantir que não haja margem externa */
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra para dar destaque */
+}
+
+/* Ajuste para o conteúdo à esquerda da tela (não será sobreposto pelo placar) */
+#startScreen, #gameScreen {
+  padding-left: 220px; /* Deixa espaço para o placar fixo */
+}
+
+/* Ajustando os detalhes de cada valor no placar */
+#placar .pontos-label,
+#placar .value#placarValue {
+  color: #ffdb58;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+#placar .value#tentativasValue {
+  color: #e74c3c;
+}
+
+#placar .value#tempoValue {
+  color: orange;
+}
+
+#placar .value#recordValue {
+  color: #9b59b6;
+}
+
+#placar .value {
+  font-size: 28px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  transition: color 0.5s ease;
+}
+
+#placar .value.high-score {
+  color: #2ecc71;
+}
+
+#placar .value.low-score {
+  color: #e74c3c;
+}
+
+/* Outros estilos não alterados */
+
+
+/* Temas */
+#placar.fliperama {
+  background-color: #222;
+  color: #0f0;
+  font-family: 'Press Start 2P', cursive;
+}
+
+#placar.green {
+  background-color: #4CAF50;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* CARTAS */
+/* CARTAS */
+.card {
+  position: relative;
+  width: 100px; /* Tamanho fixo para as cartas */
+  height: 150px; /* Tamanho fixo para as cartas */
+  border-radius: 10px;
+  margin: 5px;
+  background-color: #145a32;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Garante que as imagens não ultrapassem os limites da carta */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* Ajusta a imagem para se ajustar à carta */
+.card img {
+  width: 100%; /* A largura da imagem será 100% da largura da carta */
+  height: 100%; /* A altura da imagem será 100% da altura da carta */
+  object-fit: contain; /* Ajusta a imagem sem distorcê-la e mantendo suas proporções */
+  display: none; /* Inicialmente, as imagens ficam ocultas */
+  border-radius: 5px; /* Bordas arredondadas para a imagem */
+}
+
+
+/* Quando a carta for revelada, a imagem será visível */
+.card.revealed img {
+  display: block;
+}
+
+/* Quando a carta estiver combinada, a imagem será exibida com a carta */
+.card.matched {
+  background-color: #27ae60; /* Cor de fundo das cartas combinadas */
+  border-color: #fff;
+}
+
+/* BOTÕES */
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  background-color: #388e3c;
+}
+
+/* TABULEIRO */
+#gameBoard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+/* TELAS */
+.hidden {
+  display: none;
+}
+
+#startScreen,
+#gameScreen {
+  text-align: center;
+  padding: 20px;
+}
+
+#startScreen {
+  margin-top: 50px;
+}
+
+#startScreen h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+#startScreen input {
+  margin-bottom: 10px;
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#gameScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+#gameScreen h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+#startButton,
+#restartButton {
+  margin-top: 20px;
+}
+
+/* PLACAR DE LÍDERES */
+#leaderboard {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  display: none;
+}
+
+#leaderboard ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#leaderboard li {
+  padding: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+#leaderboard .name {
+  font-weight: bold;
+}
+
+#leaderboard .stats {
+  font-size: 14px;
+  color: gray;
+}
+
+/* INFORMAÇÕES DO JOGADOR */
+#playerName {
+  font-size: 22px;
+  font-weight: bold;
+  
+}
+
+#nickname {
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* BARRA DE PROGRESSO */
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #444;
+  border-radius: 5px;
+  margin-top: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.progress {
+  height: 100%;
+  background-color: #ffdb58;
+  border-radius: 5px;
+  width: 0;
+  transition: width 0.3s ease;
+}
+body {
+  background-image: url('caminho/para/a/sua/imagem.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  margin: 0; /* Remover margens padrão */
+  height: 100vh; /* Garantir que ocupe toda a altura da tela */
+}
+#fundo {
+  width: 100%; /* Ocupa toda a largura do contêiner */
+  height: 500px; /* Define uma altura para a div */
+  background-image: url('caminho/para/sua/imagem.jpg'); /* Caminho para a sua imagem */
+  background-size: cover; /* A imagem vai cobrir toda a área da div */
+  background-position: center center; /* Centraliza a imagem dentro da div */
+}
+#placarSuperior {
+  background: #222;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  width: fit-content;
+  margin: 10px auto;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+}
+.highlight-yellow,
+.highlight-red,
+.highlight-orange,
+.highlight-purple {
+  font-size: 18px;
+}
+/* Estilo para o playerName */
+#playerName {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffdb58; /* Cor amarela */
+  margin-top: 10px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para as tentativas */
+#tentativas {
+  font-size: 20px;
+  color: #e74c3c; /* Cor vermelha */
+  font-weight: bold;
+  margin-top: 10px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para o timer */
+#timer {
+  font-size: 20px;
+  color: #ffa500; /* Cor laranja */
+  font-weight: bold;
+  margin-top: 10px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para o placar */
+#placar {
+  margin-top: 40px; /* Aumentar a margem superior para distanciar do botão */
+  background: linear-gradient(145deg, #f5f5f5, #ddd); /* Fundo semelhante ao placar */
+  border: 2px solid #333; /* Borda semelhante ao placar */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  margin: 40px auto; /* Aumentando o espaço acima e abaixo do placar */
+  font-family: 'Press Start 2P', cursive;
+  color: #fff;
+  font-size: 24px;
+  animation: placarAnim 1s ease-in-out;
+}
+
+/* Estilo para o record */
+#record {
+  font-size: 20px;
+  color: #9b59b6; /* Cor roxa */
+  font-weight: bold;
+  margin-top: 10px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('tema.png'); /* caminho da imagem */
+  background-size: cover;      /* cobre todo o fundo */
+  background-position: center; /* centraliza a imagem */
+  background-repeat: no-repeat;/* evita repetições */
+  height: 100vh;               /* garante 100% da altura da janela */
+}
+.card:hover {
+  box-shadow: 0 0 15px #0adf7b, 0 0 25px #1fe260;
+  transform: scale(1.05);
+}
+body {
+  cursor: url('cursor_arvore.png'), auto;
+}
+
