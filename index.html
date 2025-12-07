@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo da Memória - Níveis</title>
+  <style>
+    /* Estilos para o título da página */
+    title {
+      color: #ffdb58; /* Cor amarela */
+      font-size: 48px; /* Aumentar o tamanho da fonte */
+      font-family: 'Press Start 2P', cursive; /* Fonte estilo pixel */
+    }
+ body 
+
+   body {
+      margin: 0; /* Remove margens padrão */
+      padding: 0; /* Remove padding padrão */
+      height: 100vh; /* Garante que o corpo ocupe 100% da altura da tela */
+      background-image: url('caminho/para/sua/imagem.jpg'); /* Caminho para a sua imagem */
+      background-size: cover; /* A imagem vai cobrir toda a tela */
+      background-position: center center; /* Centraliza a imagem */
+      background-attachment: fixed; /* Faz a imagem ficar fixa enquanto o conteúdo rola */
+    }
+.hidden {
+  display: none;
+}
+
+.highlight-yellow {
+  color: #ffdb58;
+  font-weight: bold;
+}
+
+.highlight-red {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.highlight-orange {
+  color: #ffa500;
+  font-weight: bold;
+}
+
+.highlight-purple {
+  color: #9b59b6;
+  font-weight: bold;
+}
+
+#placar {
+  margin-top: 20px;
+  background: linear-gradient(145deg, #f5f5f5, #ddd);
+  border: 2px solid #333;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  margin: 20px auto;
+  font-family: 'Press Start 2P', cursive;
+  color: #fff;
+  font-size: 24px;
+  animation: placarAnim 1s ease-in-out;
+}
+
+#placar .label {
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+#placar .value {
+  font-size: 28px;
+  color: #ffdb58;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  transition: color 0.5s ease;
+}
+
+#placar .value.high-score {
+  color: #2ecc71;
+}
+
+#placar .value.low-score {
+  color: #e74c3c;
+}
+
+#timer, #tentativas {
+  margin-top: 10px;
+}
+
+#gameBoard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  padding: 10px;
+  max-width: 720px;
+  margin: 0 auto;
+  transition: transform 0.5s;
+}
+
+.card {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  transition: visibility 0s 0.3s;
+}
+
+.card.revealed, .card.matched {
+  background-color: #fff;
+  border-color: #ffdb58;
+  transform: scale(1.1);
+}
+
+.matched {
+  background-color: #c8f7c5;
+  animation: matchAnim 0.6s ease-in-out;
+}
+
+.card img.hidden-img {
+  visibility: hidden;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #ffdb58;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+  background-color: #e6c15b;
+}
+
+button:active {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes placarAnim {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes matchAnim {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #444;
+  border-radius: 5px;
+  margin-top: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.progress {
+  height: 100%;
+  background-color: #ffdb58;
+  border-radius: 5px;
+  width: 0;
+  transition: width 0.3s ease;
+}
+  </style>
+</head>
+<body>
+  <link rel="stylesheet" href="style.css">
+  <div id="startScreen">
+    <h1>Jogo da Memória</h1>
+    <input type="text" id="nickname" placeholder="Digite seu nome" />
+    <br>
+    <label for="dificuldade">Dificuldade:</label>
+    <select id="dificuldade">
+      <option value="facil">Fácil</option>
+      <option value="medio">Médio</option>
+      <option value="dificil">Difícil</option>
+    </select>
+    <br><br>
+    <button id="startButton">Começar</button>
+  </div>
+<div id="gameScreen" class="hidden">
+  <div id="playerName"></div>
+<div id="tentativas"><span class="highlight-red">Tentativas:</span> 0</div>
+<div id="timer"><span class="highlight-orange">Tempo:</span> 0s</div>
+<div id="placar"><span class="highlight-yellow">Pontos:</span> 0</div>
+<div id="record"><span class="highlight-purple">Melhor Recorde:</span> –</div>
+  <button id="restartButton">Reiniciar</button>
+  <div id="gameBoard"></div>
+</div>
+  <script src="script.js"></script>
+
+<audio id="background-music" autoplay loop>
+    <source src="song.mp3" type="audio/mpeg">
+    Seu navegador não suporta o elemento de áudio.
+</audio>
+<script>
+  // Espera o usuário clicar para começar o jogo, e então começa a música
+  document.getElementById('startButton').addEventListener('click', function() {
+    const music = document.getElementById('background-music');
+    music.play();  // Garante que o som será tocado após o clique do usuário
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</body>
+</html>
