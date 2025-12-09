@@ -32,7 +32,7 @@ const somAcerto = new Audio('sons/acerto.mp3');
 const somErro = new Audio('sons/erro.mp3');
 const somVitoria = new Audio('sons/vitoria.mp3');
 
-// Atualiza o placar na parte superior e lateral
+// Atualiza o placar
 function updateLeaderboard() {
   placarSpan.textContent = `Pontos: ${pontos}`;
   tentativasSpan.textContent = `Tentativas: ${tentativas}`;
@@ -44,7 +44,6 @@ function updateLeaderboard() {
   }
 }
 
-// Modifica a função para salvar o recorde com base nos pontos
 function salvarRecorde() {
   const recordSalvo = localStorage.getItem(getRecordKey());
   const recordNumerico = recordSalvo ? parseInt(recordSalvo) : null;
@@ -57,12 +56,10 @@ function salvarRecorde() {
   atualizarPlacarLateral();
 }
 
-// Atualiza o placar lateral com as informações do jogador
 function atualizarPlacarLateral() {
   leaderboardList.prepend(li);
 }
 
-// Função que inicia o jogo
 startButton.addEventListener('click', () => {
   const nick = nicknameInput.value.trim();
   if (!nick) {
@@ -70,23 +67,22 @@ startButton.addEventListener('click', () => {
     return;
   }
   playerNameDisplay.textContent = `Jogador: ${nick}`;
-  startScreen.classList.add('hidden');  // Tela inicial oculta
-  gameScreen.classList.remove('hidden');  // Tela do jogo visível
+  startScreen.classList.add('hidden');
+  gameScreen.classList.remove('hidden');
   iniciarJogo();
 });
 
-// Reinicia o jogo
 restartButton.addEventListener('click', () => {
   clearInterval(intervaloTempo);
-  gameScreen.classList.add('hidden');  // Tela do jogo oculta
-  startScreen.classList.remove('hidden');  // Tela inicial visível
+  gameScreen.classList.add('hidden');
+  startScreen.classList.remove('hidden');
   nicknameInput.value = "";
   recordDisplay.textContent = 'Melhor Recorde: –';
-  resetGameBoard();  // Reseta o tabuleiro antes de exibir novamente
+  resetGameBoard();
 });
 
 function resetGameBoard() {
-  gameBoard.innerHTML = ''; // Limpa o tabuleiro de cartas
+  gameBoard.innerHTML = '';
   pontos = 0;
   tentativas = 0;
   tempo = 0;
@@ -166,16 +162,20 @@ function iniciarJogo() {
     card.dataset.index = index;
     card.dataset.image = imgName;
     const corFundo = corPorImagem[imgName] || '#ccc';
-    card.style.backgroundColor = '#145a32';  // Cor inicial de fundo
+    card.style.backgroundColor = '#145a32';
 
     const img = document.createElement('img');
-    img.src = `imagens/${nivel}/${imgName}`;
+
+    // 👉 LINHA CORRIGIDA — REMOVIDO O CAMINHO QUE DAVA ERRO
+    img.src = imgName;
+
     img.alt = imgName.replace('.png', '');
     img.title = img.alt;
-    img.classList.add('hidden-img');  // Imagem inicialmente oculta
-    img.style.display = 'none'; // Esconde a imagem por padrão
+    img.classList.add('hidden-img');
+    img.style.display = 'none';
+
     img.onload = () => {
-      img.style.display = ''; // Mostra a imagem quando ela estiver carregada
+      img.style.display = '';
     };
 
     img.onerror = () => {
@@ -189,7 +189,7 @@ function iniciarJogo() {
     card.addEventListener('click', () => {
       if (lock || card.classList.contains('revealed') || card === firstCard) return;
 
-      console.log(`Carta clicada: ${imgName}`); // Debug: Mostra qual carta foi clicada
+      console.log(`Carta clicada: ${imgName}`);
       revelarCarta(card);
 
       if (!firstCard) {
@@ -207,17 +207,17 @@ function iniciarJogo() {
   function revelarCarta(card) {
     const img = card.querySelector('img');
     img.classList.remove('hidden-img');
-    img.style.display = '';  // Mostra a imagem
+    img.style.display = '';
     card.classList.add('revealed');
-    card.style.backgroundColor = '';  // Remove a cor de fundo
+    card.style.backgroundColor = '';
   }
 
   function compararCartas(card1, card2) {
-    console.log(`Comparando cartas: ${card1.dataset.image} com ${card2.dataset.image}`); // Debug
+    console.log(`Comparando cartas: ${card1.dataset.image} com ${card2.dataset.image}`);
     if (card1.dataset.image === card2.dataset.image) {
       somAcerto.play();
-      pontos += 10;  // Adiciona pontos quando as cartas forem iguais
-      updateLeaderboard();  // Atualiza o placar
+      pontos += 10;
+      updateLeaderboard();
       card1.classList.add('matched');
       card2.classList.add('matched');
       resetSelection();
@@ -232,9 +232,9 @@ function iniciarJogo() {
   }
 
   function esconderCartas(card1, card2) {
-    console.log("Escondendo as cartas");  // Debug
-    card1.querySelector('img').style.display = 'none'; // Esconde a imagem
-    card2.querySelector('img').style.display = 'none'; // Esconde a imagem
+    console.log("Escondendo as cartas");
+    card1.querySelector('img').style.display = 'none';
+    card2.querySelector('img').style.display = 'none';
     card1.classList.remove('revealed');
     card2.classList.remove('revealed');
     card1.style.backgroundColor = '#145a32';
@@ -244,26 +244,25 @@ function iniciarJogo() {
   function resetSelection() {
     firstCard = null;
     secondCard = null;
-    lock = false;  // Reseta o lock aqui
-    console.log("lock resetado");  // Debug
+    lock = false;
+    console.log("lock resetado");
   }
 
-function checarVitoria() {
-  const matchedCount = document.querySelectorAll('.card.matched').length;
-  if (matchedCount === cards.length) {
-    clearInterval(intervaloTempo);
-    somVitoria.play();
+  function checarVitoria() {
+    const matchedCount = document.querySelectorAll('.card.matched').length;
+    if (matchedCount === cards.length) {
+      clearInterval(intervaloTempo);
+      somVitoria.play();
 
-    // 🎉 Adiciona confetes
-    confetti({
-      particleCount: 150,
-      spread: 80,
-      origin: { y: 0.6 }
-    });
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
 
-    alert("Você venceu!");
-    salvarRecorde();
+      alert("Você venceu!");
+      salvarRecorde();
+    }
   }
-}
 
 }
