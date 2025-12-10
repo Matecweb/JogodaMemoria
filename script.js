@@ -290,12 +290,6 @@ function iniciarJogo() {
       alert("Você venceu!");
       salvarRecorde();
     }
-    #leaderboardList,
-#leaderboardList li {
-    display: none !important;
-}
-
   }
-
 }
 
