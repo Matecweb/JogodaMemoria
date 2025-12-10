@@ -1,75 +1,3 @@
-/* PLACAR */
-#placar {
-  position: fixed;
-  top: 20px; /* Distância do topo para evitar sobrepor o conteúdo superior */
-  left: 0; /* Coloca o placar no lado esquerdo da tela */
-  background-color: white;
-  color: black;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  z-index: 1; /* Não precisa ser tão alto se não vai sobrepor outros elementos */
-  width: 200px; /* Ajuste o tamanho do placar */
-  margin: 0; /* Garantir que não haja margem externa */
-  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra para dar destaque */
-}
-
-/* Ajuste para o conteúdo à esquerda da tela (não será sobreposto pelo placar) */
-#startScreen, #gameScreen {
-  padding-left: 220px; /* Deixa espaço para o placar fixo */
-}
-
-/* Ajustando os detalhes de cada valor no placar */
-#placar .pontos-label,
-#placar .value#placarValue {
-  color: #ffdb58;
-  font-weight: bold;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-}
-
-#placar .value#tentativasValue {
-  color: #e74c3c;
-}
-
-#placar .value#tempoValue {
-  color: orange;
-}
-
-#placar .value#recordValue {
-  color: #9b59b6;
-}
-
-#placar .value {
-  font-size: 28px;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  transition: color 0.5s ease;
-}
-
-#placar .value.high-score {
-  color: #2ecc71;
-}
-
-#placar .value.low-score {
-  color: #e74c3c;
-}
-
-/* Outros estilos não alterados */
-
-
-/* Temas */
-#placar.fliperama {
-  background-color: #222;
-  color: #0f0;
-  font-family: 'Press Start 2P', cursive;
-}
-
-#placar.green {
-  background-color: #4CAF50;
-  color: white;
-  font-family: Arial, sans-serif;
-}
 
 /* CARTAS */
 /* CARTAS */
@@ -350,9 +278,5 @@ body {
 }
 body {
   cursor: url('cursor_arvore.png'), auto;
-}
-    #leaderboardList,
-#leaderboardList li {
-    display: none !important;
-}
+
 
