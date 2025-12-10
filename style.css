@@ -351,4 +351,8 @@ body {
 body {
   cursor: url('cursor_arvore.png'), auto;
 }
+    #leaderboardList,
+#leaderboardList li {
+    display: none !important;
+}
 
